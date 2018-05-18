@@ -17,11 +17,6 @@
  		var newstr= document.getElementById("text").value;
  		update(newstr);
  	}
-
-
-
-
-
     var fill = d3.scale.category20();
     //输出20种类别的颜色 ---颜色比例尺
 
@@ -46,9 +41,7 @@
     // timeInterval([time])   布局时通过setInterval来避免浏览器的event loop被锁住。
     var t_str="D3 allows you to bind arbitrary data to a Document Object Model (DOM), and then apply data-driven transformations to the document. For example, you can use D3 to generate an HTML table from an array of numbers. Or, use the same data to create an interactive SVG bar chart with smooth transitions and interaction. D3 is not a monolithic framework that seeks to provide every conceivable feature. Instead, D3 solves the crux of the problem: efficient manipulation of documents based on data. This avoids proprietary representation and affords extraordinary flexibility, exposing the full capabilities of web standards such as HTML, SVG, and CSS. With minimal overhead, D3 is extremely fast, supporting large datasets and dynamic behaviors for interaction and animation. D3’s functional style allows code reuse through a diverse collection of official and community-developed modules. Modifying documents using the W3C DOM API is tedious: the method names are verbose, and the imperative approach requires manual iteration and bookkeeping of temporary state. For example, to change the text color of paragraph elements: D3 employs a declarative approach, operating on arbitrary sets of nodes called selections. For example, you can rewrite the above loop as Yet, you can still manipulate individual nodes as needed Selectors are defined by the W3C Selectors API and supported natively by modern browsers. The above examples select nodes by tag  respectively). Elements may be selected using a variety of predicates, including containment, attribute values, class and ID. D3 provides numerous methods for mutating nodes: setting attributes or styles; registering event listeners; adding, removing or sorting nodes; and changing HTML or text content. These suffice for the vast majority of needs. Direct access to the underlying DOM is also possible, as each D3 selection is simply an array of nodes. ";
 
-
-
-    update(t_str)
+    update(t_str);
     //append()使用函数在指定元素的结尾添加内容
     //transform:translate(x,y)  定义2d旋转，即平移，向右平移x,向下平移y
     function draw(words) {
@@ -71,27 +64,16 @@
             })
             .text(function(d) { return d.text; });
 
-
     }
 
     function update(tstr){
     	
   			tstr = tstr.replace(/[\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?]/g," ");
-
-
-
-
     	var tarray=tstr.split(" ");
-
-
-
-
-    	
-
+	
 
     	var meanless=['and','is','in','on','the','to','of','it','as','or','at'];
     	
-
     	var tmap ={};
     	for(var i=0;i<tarray.length;i++){
        		var strWord =tarray[i];
@@ -121,12 +103,6 @@
 		}
 	    tarray=unique1(tarray);
 
-
-
-
-
-
-
 	    function sorttimes(a,b){
 	    	var v1=tmap[a];
 	    	var v2=tmap[b];
@@ -135,7 +111,6 @@
 	    tarray=tarray.sort(sorttimes);
 	    //words([words array].map(function(d)(return{text:d;size:某一个数值}))
 	    //为words数组中的每一个word分配一个字体大小
-
 	   
 	    d3.layout.cloud().size([1200, 720]) //size([x,y])  词云显示的大小
 	    //map 返回新的object数组
