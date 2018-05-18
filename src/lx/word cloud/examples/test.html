@@ -39,7 +39,8 @@
     //append()使用函数在指定元素的结尾添加内容
     //transform:translate(x,y)  定义2d旋转，即平移，向右平移x,向下平移y
     function draw(words) {
-        d3.select("body").append("svg")
+        // d3.select("body").insert("svg","#text")
+        d3.select("body").insert("svg")
             .attr("width", 1200)
             .attr("height", 720)
             .attr("style","border:1px solid red")
