@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  width: 960px;
+  height: 500px;
+  position: relative;
+}
+
+form {
+  position: absolute;
+  top: 1em;
+  left: 1em;
+}
+
+path {
+  fill-rule: evenodd;
+  stroke: #333;
+  stroke-width: 2px;
+}
+
+.sun path {
+  fill: #6baed6;
+}
+
+.planet path {
+  fill: #9ecae1;
+}
+
+.annulus path {
+  fill: #c6dbef;
+}
+
+</style>
+<form>
+  <input type="radio" name="reference" id="ref-annulus" >
+  <label for="ref-annulus">Annulus</label><br>
+  <input type="radio" name="reference" id="ref-planet" checked>
+  <label for="ref-planet">Planets</label><br>
+  <input type="radio" name="reference" id="ref-sun">
+  <label for="ref-sun">Sun</label>
+  <br/>
+  <label for="ref-speed">Speed</label>
+  <input type="range" id="ref-speed" name="speed" min="0" value="4" max="50" step="1" >
+</form>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+
+var width = 960,
+    height = 500,
+    radius = 80;
+
+var offset = 0,
+    speed = 4,
+    start = Date.now();
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+  .append("g")
+    .attr("id", "svg-child")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(.5)")
+  .append("g")
+    .attr("id", "svg-grandchild");
+
+var frame = svg.append("g")
+      .attr("id", "frame")
+    .datum({radius: Infinity});
+
+//radius 为负值代表逆时针旋转
+frame.append("g")
+    .attr("class", "annulus")
+    .datum({teeth: 80, radius: -radius * 5, annulus: true})
+  .append("path")
+    .attr("d", gear);
+
+frame.append("g")
+    .attr("class", "sun")
+    .datum({teeth: 32, radius: radius * 2})
+  .append("path")
+    .attr("d", gear);
+
+frame.append("g")
+    .attr("class", "planet")
+    .attr("transform", "translate(0,-" + radius * 3.5 + ")")
+    .datum({teeth: 24, radius: -radius * 1.5})
+  .append("path")
+    .attr("d", gear);
+
+frame.append("g")
+    .attr("class", "planet")
+    .attr("transform", "translate(0," + radius * 3.5 + ")")
+    .datum({teeth: 24, radius: -radius * 1.5})
+  .append("path")
+    .attr("d", gear);
+
+frame.append("g")
+    .attr("class", "planet")
+    .attr("transform", "translate("+ radius * 3.5 + ",0)")
+    .datum({teeth: 24, radius: -radius * 1.5})
+  .append("path")
+    .attr("d", gear);
+
+frame.append("g")
+    .attr("class", "planet")
+    .attr("transform", "translate(-"+ radius * 3.5 + ",0)")
+    .datum({teeth: 24, radius: -radius * 1.5})
+  .append("path")
+    .attr("d", gear);
+
+
+d3.selectAll("input[name=reference]")
+  .data([radius * 5, Infinity, -radius])
+    .on("change", function(radius1) {
+      //radius0: 原来的radius
+      //radius1: 新选项的radius
+      var radius0 = frame.datum().radius, angle = (Date.now() - start) * speed;
+      frame.datum({radius: radius1});
+      //radius=Infinity的话，svg就不会旋转。即planet模式，其他两模式下，planet跟着svg旋转
+      //为了保证转换动画的流畅性。
+      // console.log("before:", offset);
+      // console.log("radius0:", radius0);
+      // console.log("angle: ", angle);
+      svg.attr("transform", "rotate(" + (offset += angle / radius0 - angle / radius1) + ")");
+      // svg.attr("transform", "rotate(" + ( angle / radius0 - angle / radius1 ) + ")");
+      // svg.attr("transform", "rotate(0)");
+      // console.log("d_offset",angle / radius0 - angle / radius1);
+      // console.log("after:", offset);
+    });
+
+d3.selectAll("input[name=speed]")
+    .on("input", function() {
+      var oldspeed = speed;
+      speed = +this.value;
+      var angle0 = (Date.now() - start) * oldspeed;
+      var angle1 = (Date.now() - start) * speed;
+      var radius = frame.datum().radius
+      svg.attr("transform", "rotate(" + (offset += angle0 / radius - angle1 / radius) + ")");
+    });
+
+function gear(d) {
+  var n = d.teeth,
+      r2 = Math.abs(d.radius), // 中径
+      r0 = r2 - 8, //内径
+      r1 = r2 + 8, //外径
+      // r3:中间的孔的半径，如果是annulus的话，r3 = r2 + 20，且调换r0, r1，否则r3 = 20
+      r3 = d.annulus ? (r3 = r0, r0 = r1, r1 = r3, r2 + 20) : 20,
+      //da：每齿弧度
+      da = Math.PI / n,
+      //a0: annulus则为+pi/2, 否则为-pi/2，决定了齿的方向
+      a0 = -Math.PI / 2 + (d.annulus ? Math.PI / n : 0),
+      i = -1,
+      path = ["M", r0 * Math.cos(a0), ",", r0 * Math.sin(a0)];
+  // console.log(r3);
+  /*A指令
+　Elliptical Arc，允许不闭合。可以想像成是椭圆的某一段，共七个参数。
+　RX,RY指所在椭圆的半轴大小
+　XROTATION指椭圆的X轴与水平方向顺时针方向夹角，可以想像成一个水平的椭圆绕中心点顺时针旋转XROTATION的角度。
+　FLAG1只有两个值，1表示大角度弧线，0为小角度弧线。
+　FLAG2只有两个值，确定从起点至终点的方向，1为顺时针，0为逆时针
+　X,Y为终点坐标
+  Z命令会从当前点画一条直线到路径的起点。不区分大小写
+  【Line to】需要两个参数，分别是一个点的x轴和y轴坐标，L命令将会在当前位置和新位置（L前面画笔所在的点）之间画一条线段。
+  */
+  while (++i < n) path.push(
+      "A", r0, ",", r0, " 0 0,1 ", r0 * Math.cos(a0 += da), ",", r0 * Math.sin(a0),
+      "L", r2 * Math.cos(a0), ",", r2 * Math.sin(a0),
+      "L", r1 * Math.cos(a0 += da / 3), ",", r1 * Math.sin(a0),
+      "A", r1, ",", r1, " 0 0,1 ", r1 * Math.cos(a0 += da / 3), ",", r1 * Math.sin(a0),
+      "L", r2 * Math.cos(a0 += da / 3), ",", r2 * Math.sin(a0),
+      "L", r0 * Math.cos(a0), ",", r0 * Math.sin(a0));
+  path.push("M 0,", -r3, "A", r3, ",", r3, " 0 0,0 0,", r3, "A", r3, ",", r3, " 0 0,0 0,", -r3, "Z");
+  return path.join("");
+}
+
+var timer = d3.timer(ftimer);
+
+function ftimer() {
+  var angle = (Date.now() - start) * speed,
+      // transform = function(d) { return "rotate(" + angle + ")"; };
+      transform = function(d) { return "rotate(" + angle / d.radius + ")"; };// 除以d.radius时，radius为负会使得方向相反，因为没有调整位置，所以旋转中心是中间
+  frame.selectAll("path").attr("transform", transform);
+  frame.attr("transform", transform); // frame of reference
+  // if (angle > 10000) {timer.stop();}
+}
+</script>

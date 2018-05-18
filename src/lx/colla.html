@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.node {
+  cursor: pointer;
+}
+
+.node circle {
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.node text {
+  font: 10px sans-serif;
+}
+
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5px;
+}
+</style>
+<head>
+	<title>Collapsible Tree</title>
+</head>
+
+
+<body>
+<script src="https://d3js.org/d3.v3.min.js"></script> 
+<script>
+var margin = {top: 20, right: 120, bottom: 20, left: 120},
+    width = 960 - margin.right - margin.left,
+    height = 800 - margin.top - margin.bottom; //定义边框数值
+
+var i = 0,
+    duration = 7500,
+    root;
+
+var tree = d3.layout.tree()
+    .size([height, width]); //套用d3中的tree函数
+
+var diagonal = d3.svg.diagonal()
+    .projection(function(d) { return [d.y, d.x]; });//套用等中的diagonal函数
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.right + margin.left)
+    .attr("height", height + margin.top + margin.bottom)
+  	.append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")//平移坐标系使图像显示在所需范围内
+
+d3.json("flare.json", function(error, flare) { //调用json文件中的变量flare
+  if (error) throw error;
+
+  root = flare;
+  root.x0 = height / 2;
+  root.y0 = 0;
+
+  function collapse(d) {  //折叠root的children以下的节点，以得到初始状态
+      if (d.children) {
+        d._children = d.children;
+        d._children.forEach(collapse);
+        d.children = null;
+      }
+  }
+
+  root.children.forEach(collapse);
+  update(root);//调用update函数进行绘制
+});
+
+function update(source){//主要绘制和更新函数
+	var nodes=tree.nodes(root).reverse(), //统计显示的节点数和连接数
+		links=tree.links(nodes);
+
+	// nodes.forEach(function(d){d.y=d.depth*180}); //计算每个节点的横坐标
+
+	var node = svg.selectAll("g.node").data(nodes, function(d) { return d.id || (d.id = ++i); });//绑定数据，给每个没有id的节点赋予id
+
+	var nodeEnter = node.enter().append("g")//给新增的节点添加属性，初始点为source点
+      .attr("class", "node")
+      .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
+      .on("click", click);
+
+    nodeEnter.append("circle")//根据是否有子节点判断圆的填充
+      .attr("r", 1e-6)
+      .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
+		
+	nodeEnter.append("text")//添加文字标注
+      .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
+      .attr("dy", ".35em")
+      .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
+      .text(function(d) { return d.name; })
+      .style("fill-opacity", 10);
+
+
+	var nodeUpdate = node.transition()//将现存节点（包括上述新生节点）移至新位置
+      .duration(duration)
+      .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
+
+  	nodeUpdate.select("circle")//调整节点大小和圆的填充
+      .attr("r", 4.5)
+      .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
+
+  	nodeUpdate.select("text")//调整标注尺寸
+      .style("fill-opacity", 1);
+
+
+    var nodeExit = node.exit().transition()//将消失的节点的位置都放到source处，大小趋于无
+      	.duration(duration)
+      	.attr("transform", function(d) { return "translate(" + source.y + "," + source.x + ")"; })
+      	.remove();
+
+  	nodeExit.select("circle")
+      	.attr("r", 1e-6);
+
+  	nodeExit.select("text")
+      	.style("fill-opacity", 1e-6);
+
+
+    var link=svg.selectAll("path.link").data(links,function(d){return d.target.id});//绑定数据
+
+    link.enter().insert("path","g")
+      	.attr("class","link")
+    	.attr("d",function(d){
+    		var o={x:source.x0,y:source.y0};
+    		return diagonal({source:o,target:o});
+    	})
+
+   	link.transition()
+    	.duration(duration)
+        .attr("d", diagonal);
+
+
+    link.exit().transition()
+        .duration(duration)
+        .attr("d", function(d) {
+        var o = {x: source.x, y: source.y};
+        return diagonal({source: o, target: o});
+        })
+        .remove();
+
+
+
+    nodes.forEach(function(d) {//保存节点位置以便下次当旧位置使用
+    d.x0 = d.x;
+    d.y0 = d.y;
+  });
+}
+
+function click(d){//点击某点后刷新状态的函数
+	if(d.children){
+		d._children=d.children;
+		d.children=null;
+	}
+	else{
+		d.children=d._children;
+		d._children=null;
+	}
+	update(d);
+  
+}
+</script>
+</body>
