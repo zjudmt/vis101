@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+
+.node {
+  font: 300 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  fill: #bbb;
+}
+
+.node:hover {
+  fill: #000;
+}
+
+.link {
+  stroke: steelblue;
+  stroke-opacity: 0.4;
+  fill: none;
+  pointer-events: none;
+}
+
+.node:hover,
+.node--source,
+.node--target {
+  font-weight: 700;
+}
+
+.node--source {
+  fill: #2ca02c;
+}
+
+.node--target {
+  fill: #d62728;
+}
+
+.link--source,
+.link--target {
+  stroke-opacity: 1;
+  stroke-width: 2px;
+}
+
+.link--source {
+  stroke: #d62728;
+}
+
+.link--target {
+  stroke: #2ca02c;
+}
+
+</style>
+
+	<meta charset="UTF-8">
+	<title>Bundle Graph</title>
+</head>
+<body>
+β:
+<input type="range" id="beta" name="beta" min="0" value="0.95" max="1" step="0.01" oninput="betachange(this.value)" >
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script type="text/javascript">
+// 定义svg尺寸并创建svg
+var beta = 0.95
+var width = 1280
+var height = 720
+// 定义直径半径
+var diameter = 720,
+    radius = diameter / 2,
+    innerRadius = radius - 100;
+
+var svg = d3.select("body")
+		.append("svg")
+			.attr("width", width)
+			.attr("height", height)
+    .append("g")
+      .attr("transform", "translate(" + width/2 + "," + radius + ")");
+
+
+// 定义cluster，使用极坐标
+var cluster = d3.cluster()
+				.size([360, innerRadius])
+
+// 定义颜色比例尺
+var color = d3.scaleOrdinal(d3.schemeCategory20);
+
+// 定义bundle曲线生成器
+var bundle = d3.radialLine()
+			.curve(d3.curveBundle.beta(beta))
+			.radius(function(d){ return d.y; })
+			.angle(function(d){ return d.x /180 * Math.PI; });// angle : 0 -> -y方向 (12 o'clock)
+
+var link = svg.append("g")
+                .attr("class", "link")
+              .selectAll(".link");
+
+var node = svg.append("g")
+                .attr("class", "node")
+              .selectAll(".node");
+
+var root, linkdata;
+
+d3.json("collapsible.json", function(error, data){
+	if (error) { throw error; }
+
+  root = dataProcess(data);
+
+  cluster(root);
+
+  // lineGen(root.leaves());
+  linkdata = randomLinks(root.leaves())
+  link = link
+    .data(linkdata)
+    .enter()
+    .append("path")
+    .each(function(d) { d.source = d[0], d.target = d[d.length - 1]; })
+      .attr("class", "link")
+      .attr("d", bundle);
+    console.log("link", link);
+
+  node = node
+    .data(root.leaves())
+    .enter().append("text")
+      .attr("class", "node")
+      .attr("dy", "0.31em")
+      .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + (d.y + 8) + ",0)" + (d.x < 180 ? "" : "rotate(180)"); })
+      .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
+      .text(function(d) { return d.data.name; })
+      .on("mouseover", mouseovered)
+      .on("mouseout", mouseouted);
+
+  console.log("leaves", root.leaves());
+  
+  function dataProcess(data){
+    console.log(data);
+    return d3.hierarchy(data);
+  }
+
+  function mouseovered(d) {
+    node
+        .each(function(n) { n.target = n.source = false; });
+
+    link
+        .classed("link--target", function(l) { if (l.target === d) return l.source.source = true; })
+        .classed("link--source", function(l) { if (l.source === d) return l.target.target = true; })
+      .filter(function(l) { return l.target === d || l.source === d; })
+        .raise();
+
+    node
+        .classed("node--target", function(n) { return n.target; })
+        .classed("node--source", function(n) { return n.source; });
+  }
+
+  function mouseouted(d) {
+    link
+        .classed("link--target", false)
+        .classed("link--source", false);
+
+    node
+        .classed("node--target", false)
+        .classed("node--source", false);
+  }
+
+  function randomLinks(nodes){
+    var randomInt = function (max) {
+      return Math.floor(Math.random() * max);
+    };
+
+    var links = [];
+
+    nodes.forEach(function(d){
+      var randint = [], backup = [];
+      for (var i = 0; i < nodes.length; i++){
+        backup[i] = i;
+      }
+      //link number here controlled
+      for(var i = 0; i < randomInt(nodes.length)/50; i++){
+        var index = randomInt(backup.length);
+        randint[i] = backup[index];
+        backup.splice(index, 1);
+      }
+      for(var i = 0; i < randint.length; i++){
+        links.push(d.path(nodes[randint[i]]));
+      }
+    });
+
+    return links;
+  }
+
+});
+
+function betachange(value){
+  beta = value;
+  document.getElementById('beta').innerHTML = value;
+  var newbundle = d3.radialLine()
+      .curve(d3.curveBundle.beta(beta))
+      .radius(function(d){ return d.y; })
+      .angle(function(d){ return d.x /180 * Math.PI; });
+
+  link.attr("d", newbundle);
+}
+
+</script>	
+</body>
+</html>

@@ -1,0 +1,124 @@
+<head>
+   <meta charset="UTF-8">
+   <title></title>
+   <script src="../build/d3.min.js"></script>
+   <script src="../build/d3.layout.cloud.js"></script>
+</head>
+<body>
+
+ <script type="text/javascript">
+
+
+ 	
+    var fill = d3.scale.category20();
+    //输出20种类别的颜色 ---颜色比例尺
+
+    //word cloud layout  词云布局，d3布局中为词云设立的单独的一种布局方式
+    //d3.layout.cloud() 构造一个词云的布局实例
+    //on(type,listener) 注册特定的listener来接收布局中特定类型的event。
+    //目前只有 word和end这两种event是被支持的。
+    //word这种event在该布局完成对每一个word的布局时被调度。
+    //end这种活动在改布局完成对所有的words的布局时被调度。
+    //注册的listener通过两个参数被调度：
+    //被成功布局的单词数组
+    //以[{x0,y0},{x1,y1}]形式为界限，代表words范围    a bounds object of the form [{x0, y0}, {x1, y1}] representing the extent of the placed objects.
+    //
+   
+    //start 布局算法   初始化单词数组上的各种参数，并且从最大的单词开始布局单词，
+    //从矩形区域的中间开始，每一个单词在布局时都要检测是否与先前已经布局好的单词位置冲突。
+    //一旦检测到冲突，该算法会沿着螺旋线重新布局该单词。
+    //如果一个单词不能在沿着螺旋线的任何地方被布局，该单词最终将不会显示在词云图上，该问题可能在后续版本中被解决。
+
+    //stop() 停止布局算法
+
+    // timeInterval([time])   布局时通过setInterval来避免浏览器的event loop被锁住。
+    var t_str="D3 allows you to bind arbitrary data to a Document Object Model (DOM), and then apply data-driven transformations to the document. For example, you can use D3 to generate an HTML table from an array of numbers. Or, use the same data to create an interactive SVG bar chart with smooth transitions and interaction. D3 is not a monolithic framework that seeks to provide every conceivable feature. Instead, D3 solves the crux of the problem: efficient manipulation of documents based on data. This avoids proprietary representation and affords extraordinary flexibility, exposing the full capabilities of web standards such as HTML, SVG, and CSS. With minimal overhead, D3 is extremely fast, supporting large datasets and dynamic behaviors for interaction and animation. D3’s functional style allows code reuse through a diverse collection of official and community-developed modules. Modifying documents using the W3C DOM API is tedious: the method names are verbose, and the imperative approach requires manual iteration and bookkeeping of temporary state. For example, to change the text color of paragraph elements: D3 employs a declarative approach, operating on arbitrary sets of nodes called selections. For example, you can rewrite the above loop as Yet, you can still manipulate individual nodes as needed Selectors are defined by the W3C Selectors API and supported natively by modern browsers. The above examples select nodes by tag  respectively). Elements may be selected using a variety of predicates, including containment, attribute values, class and ID. D3 provides numerous methods for mutating nodes: setting attributes or styles; registering event listeners; adding, removing or sorting nodes; and changing HTML or text content. These suffice for the vast majority of needs. Direct access to the underlying DOM is also possible, as each D3 selection is simply an array of nodes. ";
+
+    update(t_str);
+    //append()使用函数在指定元素的结尾添加内容
+    //transform:translate(x,y)  定义2d旋转，即平移，向右平移x,向下平移y
+    function draw(words) {
+        d3.select("body").append("svg")
+            .attr("width", 900)
+            .attr("height", 600)
+            //.attr("style","border:1px solid red")
+            .append("g")
+            .attr("transform", "translate(450,300)")
+            .selectAll("text")
+            .data(words)
+            .enter().append("text")
+            .style("border","1px solid blue")
+            .style("font-size", function(d) { return d.size + "px"; })
+            .style("font-family", "Impact")
+            .style("fill", function(d, i) { return fill(i); })//fill 在前面15行定义为颜色集
+            .attr("text-anchor", "middle")
+            .attr("transform", function(d) {
+                return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+            })
+            .text(function(d) { return d.text; });
+
+    }
+
+    function update(tstr){
+    	
+  			tstr = tstr.replace(/[\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?]/g," ");
+    	var tarray=tstr.split(" ");
+	
+
+    	var meanless=['and','is','in','on','the','to','of','it','as','or','at'];
+    	
+    	var tmap ={};
+    	for(var i=0;i<tarray.length;i++){
+       		var strWord =tarray[i];
+       		if(meanless.indexOf(strWord)>=0)
+       			tmap[strWord]=0;
+	        else{
+		        if(!tmap[strWord])
+		        {
+		            tmap[strWord]=1;
+		        }
+		        else
+		        {
+		            tmap[strWord]++;
+		        }
+	    	}
+	    }
+	    
+	    function unique1(array){ 
+			var n = []; //一个新的临时数组 
+			//遍历当前数组 
+			for(var i = 0; i < array.length; i++){ 
+				//如果当前数组的第i已经保存进了临时数组，那么跳过， 
+				//否则把当前项push到临时数组里面 
+				if (n.indexOf(array[i]) == -1) n.push(array[i]); 
+			} 
+			return n; 
+		}
+	    tarray=unique1(tarray);
+
+	    function sorttimes(a,b){
+	    	var v1=tmap[a];
+	    	var v2=tmap[b];
+	    	return v2-v1;
+	    }
+	    tarray=tarray.sort(sorttimes);
+	    //words([words array].map(function(d)(return{text:d;size:某一个数值}))
+	    //为words数组中的每一个word分配一个字体大小
+	   
+	    d3.layout.cloud().size([900, 600]) //size([x,y])  词云显示的大小
+	    //map 返回新的object数组
+	        .words(tarray.map(function(d) {
+	            return {"text": d, "size":tmap[d]? 10 + tmap[d] * 25:0};
+	        }))
+	        //.sort()
+	        //~~的作用是单纯的去掉小数部分，不论正负都不会改变整数部分
+	        //这里的作用是产生0 1
+	        .rotate(function() { return ~~(Math.random() * 90) ; })
+	        .font("Impact")
+	        .fontSize(function(d) { return d.size; })
+	        .on("end", draw)//结束时运行draw函数
+	        .start();
+    }
+    
+</script>
+</body>
