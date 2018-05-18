@@ -2,85 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7e0e02bf-e107-4b7b-9a21-6a0a6bd79fa5" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/Documents/code_bundle.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Documents/code_collapsible.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Documents/code_force.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Documents/code_stream.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Documents/code_tree.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Documents/code_wordcloud.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hxl/bundle/bundle.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/.idea/magenta.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/.idea/markdown-navigator/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/css/font-awesome.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/css/ie8.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/css/ie9.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/css/main.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/fonts/FontAwesome.otf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/fonts/fontawesome-webfont.eot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/fonts/fontawesome-webfont.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/fonts/fontawesome-webfont.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/fonts/fontawesome-webfont.woff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/fonts/fontawesome-webfont.woff2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/js/ie/html5shiv.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/js/ie/respond.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/js/jquery.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/js/main.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/js/skel.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/js/util.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/sass/base/_page.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/sass/base/_typography.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/sass/components/_box.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/sass/components/_button.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/sass/components/_form.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/sass/components/_icon.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/sass/components/_image.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/sass/components/_list.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/sass/components/_section.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/sass/components/_table.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/sass/components/_tiles.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/sass/ie8.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/sass/ie9.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/sass/layout/_footer.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/sass/layout/_header.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/sass/layout/_main.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/sass/layout/_menu.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/sass/layout/_wrapper.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/sass/libs/_functions.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/sass/libs/_mixins.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/sass/libs/_skel.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/sass/libs/_vars.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/assets/sass/main.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/code.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/images/Force-Directed Graph.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/images/Stream Graph.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/images/TreeMap.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/images/avicon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/images/backhome.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/images/email.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/images/github.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/images/logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/images/logo_grey.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/images/pic01.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/images/pic02.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/images/pic03.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/images/pic04.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/images/pic05.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/images/pic06.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/images/pic07.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/images/pic08.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/images/pic09.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/images/pic10.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/images/pic11.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/images/pic12.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/images/pic13.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/images/pic14.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/images/pic15.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/images/未命名.sketch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web design/index.html" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/Documents/images/Gear.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Documents/images/Word Cloud.png" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -97,68 +20,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Documents/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="18" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="code_bundle.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Documents/code_bundle.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="50" column="53" selection-start-line="50" selection-start-column="53" selection-end-line="50" selection-end-column="53" />
-              <folding>
-                <element signature="n#style#0;n#iframe#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="code_tree.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Documents/code_tree.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="241">
-              <caret line="48" column="16" selection-start-line="48" selection-start-column="16" selection-end-line="48" selection-end-column="16" />
-              <folding>
-                <element signature="n#style#0;n#iframe#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="code_wordcloud.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Documents/code_wordcloud.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="458">
-              <caret line="48" column="27" lean-forward="true" selection-start-line="48" selection-start-column="27" selection-end-line="48" selection-end-column="27" />
-              <folding>
-                <element signature="n#style#0;n#iframe#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="code_collapsible.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Documents/code_collapsible.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="477">
-              <caret line="52" lean-forward="true" selection-start-line="52" selection-end-line="52" />
-              <folding>
-                <element signature="n#style#0;n#iframe#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="code_force.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Documents/code_force.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="47" column="24" lean-forward="true" selection-start-line="47" selection-start-column="24" selection-end-line="47" selection-end-column="24" />
-              <folding>
-                <element signature="n#style#0;n#iframe#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="-327">
+              <caret line="73" column="4" lean-forward="true" selection-start-line="73" selection-start-column="4" selection-end-line="73" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -206,10 +69,10 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="63" />
-    <option name="y" value="23" />
-    <option name="width" value="1440" />
+  <component name="ProjectFrameBounds" fullScreen="true">
+    <option name="x" value="257" />
+    <option name="y" value="41" />
+    <option name="width" value="666" />
     <option name="height" value="801" />
   </component>
   <component name="ProjectView">
@@ -301,16 +164,15 @@
       <option name="presentableId" value="Default" />
       <updated>1526661151688</updated>
       <workItem from="1526661153075" duration="299000" />
-      <workItem from="1526661570053" duration="3507000" />
+      <workItem from="1526661570053" duration="4666000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3806000" />
+    <option name="totallyTimeSpent" value="4965000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="63" y="23" width="1440" height="801" extended-state="0" />
-    <editor active="true" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24947146" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -467,8 +329,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Documents/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="18" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
+        <state relative-caret-position="-327">
+          <caret line="73" column="4" lean-forward="true" selection-start-line="73" selection-start-column="4" selection-end-line="73" selection-end-column="4" />
         </state>
       </provider>
     </entry>
