@@ -16,11 +16,6 @@
  		var newstr= document.getElementById("text").value;
  		update(newstr);
  	}
-
-
-
-
-
     var fill = d3.scale.category20();
     //输出20种类别的颜色 ---颜色比例尺
 
@@ -45,18 +40,16 @@
     // timeInterval([time])   布局时通过setInterval来避免浏览器的event loop被锁住。
     var t_str="D3 allows you to bind arbitrary data to a Document Object Model (DOM), and then apply data-driven transformations to the document. For example, you can use D3 to generate an HTML table from an array of numbers. Or, use the same data to create an interactive SVG bar chart with smooth transitions and interaction. D3 is not a monolithic framework that seeks to provide every conceivable feature. Instead, D3 solves the crux of the problem: efficient manipulation of documents based on data. This avoids proprietary representation and affords extraordinary flexibility, exposing the full capabilities of web standards such as HTML, SVG, and CSS. With minimal overhead, D3 is extremely fast, supporting large datasets and dynamic behaviors for interaction and animation. D3’s functional style allows code reuse through a diverse collection of official and community-developed modules. ";
 
-
-
-    update(t_str)
+    update(t_str);
     //append()使用函数在指定元素的结尾添加内容
     //transform:translate(x,y)  定义2d旋转，即平移，向右平移x,向下平移y
     function draw(words) {
         d3.select("body").append("svg")
-            .attr("width", 2000)
-            .attr("height", 1000)
+            .attr("width", 1280)
+            .attr("height", 720)
             .attr("style","border:1px solid red")
             .append("g")
-            .attr("transform", "translate(1000,500)")
+            .attr("transform", "translate(640,360)")
             .selectAll("text")
             .data(words)
             .enter().append("text")
@@ -70,27 +63,16 @@
             })
             .text(function(d) { return d.text; });
 
-
     }
 
     function update(tstr){
     	
   			tstr = tstr.replace(/[\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?]/g," ");
-
-
-
-
     	var tarray=tstr.split(" ");
-
-
-
-
-    	
-
+	
 
     	var meanless=['and','is','in','on','the','to','of','it','as','or','at'];
     	
-
     	var tmap ={};
     	for(var i=0;i<tarray.length;i++){
        		var strWord =tarray[i];
@@ -120,12 +102,6 @@
 		}
 	    tarray=unique1(tarray);
 
-
-
-
-
-
-
 	    function sorttimes(a,b){
 	    	var v1=tmap[a];
 	    	var v2=tmap[b];
@@ -134,9 +110,8 @@
 	    tarray=tarray.sort(sorttimes);
 	    //words([words array].map(function(d)(return{text:d;size:某一个数值}))
 	    //为words数组中的每一个word分配一个字体大小
-
 	   
-	    d3.layout.cloud().size([1000, 1000]) //size([x,y])  词云显示的大小
+	    d3.layout.cloud().size([1280, 720]) //size([x,y])  词云显示的大小
 	    //map 返回新的object数组
 	        .words(tarray.map(function(d) {
 	            return {"text": d, "size":tmap[d]? 10 + tmap[d] * 25:0};
