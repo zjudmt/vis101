@@ -45,11 +45,11 @@
     //transform:translate(x,y)  定义2d旋转，即平移，向右平移x,向下平移y
     function draw(words) {
         d3.select("body").append("svg")
-            .attr("width", 1280)
-            .attr("height", 720)
+            .attr("width", 1920)
+            .attr("height", 1080)
             .attr("style","border:1px solid red")
             .append("g")
-            .attr("transform", "translate(640,360)")
+            .attr("transform", "translate(400,300)")
             .selectAll("text")
             .data(words)
             .enter().append("text")
