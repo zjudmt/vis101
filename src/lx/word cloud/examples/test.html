@@ -4,9 +4,10 @@
    <script src="../build/d3.min.js"></script>
    <script src="../build/d3.layout.cloud.js"></script>
 </head>
-
-<input type="text" value="" id="text">
+<div style="text-align:center;margin:0 auto;">
+<textarea id="text" style="width:600px;height:200px;overflow:scroll;resize:none;" >D3 allows you to bind arbitrary data to a Document Object Model (DOM), and then apply data-driven transformations to the document. For example, you can use D3 to generate an HTML table from an array of numbers. Or, use the same data to create an interactive SVG bar chart with smooth transitions and interaction. D3 is not a monolithic framework that seeks to provide every conceivable feature. Instead, D3 solves the crux of the problem: efficient manipulation of documents based on data. This avoids proprietary representation and affords extraordinary flexibility, exposing the full capabilities of web standards such as HTML, SVG, and CSS. With minimal overhead, D3 is extremely fast, supporting large datasets and dynamic behaviors for interaction and animation.</textarea> 
 <button type="submit" id="btn_submit" onclick="readandupdate()"> submit </button>
+</div>
 <canvas ></canvas>
 
  <script type="text/javascript">
@@ -38,18 +39,18 @@
     //stop() 停止布局算法
 
     // timeInterval([time])   布局时通过setInterval来避免浏览器的event loop被锁住。
-    var t_str="D3 allows you to bind arbitrary data to a Document Object Model (DOM), and then apply data-driven transformations to the document. For example, you can use D3 to generate an HTML table from an array of numbers. Or, use the same data to create an interactive SVG bar chart with smooth transitions and interaction. D3 is not a monolithic framework that seeks to provide every conceivable feature. Instead, D3 solves the crux of the problem: efficient manipulation of documents based on data. This avoids proprietary representation and affords extraordinary flexibility, exposing the full capabilities of web standards such as HTML, SVG, and CSS. With minimal overhead, D3 is extremely fast, supporting large datasets and dynamic behaviors for interaction and animation. D3’s functional style allows code reuse through a diverse collection of official and community-developed modules. ";
+    var t_str="D3 allows you to bind arbitrary data to a Document Object Model (DOM), and then apply data-driven transformations to the document. For example, you can use D3 to generate an HTML table from an array of numbers. Or, use the same data to create an interactive SVG bar chart with smooth transitions and interaction. D3 is not a monolithic framework that seeks to provide every conceivable feature. Instead, D3 solves the crux of the problem: efficient manipulation of documents based on data. This avoids proprietary representation and affords extraordinary flexibility, exposing the full capabilities of web standards such as HTML, SVG, and CSS. With minimal overhead, D3 is extremely fast, supporting large datasets and dynamic behaviors for interaction and animation. D3’s functional style allows code reuse through a diverse collection of official and community-developed modules. Modifying documents using the W3C DOM API is tedious: the method names are verbose, and the imperative approach requires manual iteration and bookkeeping of temporary state. For example, to change the text color of paragraph elements: D3 employs a declarative approach, operating on arbitrary sets of nodes called selections. For example, you can rewrite the above loop as Yet, you can still manipulate individual nodes as needed Selectors are defined by the W3C Selectors API and supported natively by modern browsers. The above examples select nodes by tag  respectively). Elements may be selected using a variety of predicates, including containment, attribute values, class and ID. D3 provides numerous methods for mutating nodes: setting attributes or styles; registering event listeners; adding, removing or sorting nodes; and changing HTML or text content. These suffice for the vast majority of needs. Direct access to the underlying DOM is also possible, as each D3 selection is simply an array of nodes. ";
 
     update(t_str);
     //append()使用函数在指定元素的结尾添加内容
     //transform:translate(x,y)  定义2d旋转，即平移，向右平移x,向下平移y
     function draw(words) {
         d3.select("body").append("svg")
-            .attr("width", 1920)
-            .attr("height", 1080)
+            .attr("width", 1200)
+            .attr("height", 720)
             .attr("style","border:1px solid red")
             .append("g")
-            .attr("transform", "translate(400,300)")
+            .attr("transform", "translate(600,360)")
             .selectAll("text")
             .data(words)
             .enter().append("text")
@@ -111,7 +112,7 @@
 	    //words([words array].map(function(d)(return{text:d;size:某一个数值}))
 	    //为words数组中的每一个word分配一个字体大小
 	   
-	    d3.layout.cloud().size([1280, 720]) //size([x,y])  词云显示的大小
+	    d3.layout.cloud().size([1200, 720]) //size([x,y])  词云显示的大小
 	    //map 返回新的object数组
 	        .words(tarray.map(function(d) {
 	            return {"text": d, "size":tmap[d]? 10 + tmap[d] * 25:0};
