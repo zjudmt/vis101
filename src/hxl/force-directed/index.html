@@ -35,7 +35,7 @@
         .force("fl", d3.forceLink().id(function(d){ return d.id; }) )//link
         .force("fcl", d3.forceCollide().radius(2).strength(1))//collide
         .force("fcg", d3.forceManyBody())//charge
-        .force("fct", d3.forceCenter(width / 2, height / 2))//center
+        .force("fct", d3.forceCenter(width / 2 - 200, height / 2))//center
             
     // var color = d3.scaleOrdinal(d3.schemeCategory20); 
     var color = d3.scaleOrdinal(d3.schemeCategory20); 
