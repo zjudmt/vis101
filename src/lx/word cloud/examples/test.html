@@ -4,11 +4,14 @@
    <script src="../build/d3.min.js"></script>
    <script src="../build/d3.layout.cloud.js"></script>
 </head>
+<body>
+
+</body>
 <div style="text-align:center;margin:0 auto;">
 <textarea id="text" style="width:600px;height:200px;overflow:scroll;resize:none;" >D3 allows you to bind arbitrary data to a Document Object Model (DOM), and then apply data-driven transformations to the document. For example, you can use D3 to generate an HTML table from an array of numbers. Or, use the same data to create an interactive SVG bar chart with smooth transitions and interaction. D3 is not a monolithic framework that seeks to provide every conceivable feature. Instead, D3 solves the crux of the problem: efficient manipulation of documents based on data. This avoids proprietary representation and affords extraordinary flexibility, exposing the full capabilities of web standards such as HTML, SVG, and CSS. With minimal overhead, D3 is extremely fast, supporting large datasets and dynamic behaviors for interaction and animation.</textarea> 
 <button type="submit" id="btn_submit" onclick="readandupdate()"> submit </button>
 </div>
-<canvas ></canvas>
+<!-- <canvas ></canvas> -->
 
  <script type="text/javascript">
 
@@ -45,7 +48,8 @@
     //append()使用函数在指定元素的结尾添加内容
     //transform:translate(x,y)  定义2d旋转，即平移，向右平移x,向下平移y
     function draw(words) {
-        d3.select("body").append("svg")
+        // d3.select("body").insert("svg","#text")
+        d3.select("body").insert("svg")
             .attr("width", 1200)
             .attr("height", 720)
             .attr("style","border:1px solid red")
