@@ -10,16 +10,26 @@
 	</style>
 </head>
 <body>
-	<svg width="1280" height="720"></svg>
+	<svg id="target-svg" width="1280" height="720"></svg>
 	<form>
   		<label><input type="radio" name="mode" value="sumBySize" checked> Size</label>
   		<label><input type="radio" name="mode" value="sumByCount"> Count</label>
 	</form>
 	<script>
 		// 获取svg画布信息
-		var svg = d3.select("svg"),
-			width = +svg.attr("width"),
-			height = +svg.attr("height");
+		var svg = d3.select("svg");
+			// width = +svg.attr("width"),
+			// height = +svg.attr("height");
+
+        svgElement = document.getElementById("target-svg");
+        var width = +window.innerWidth;
+        svgElement = document.getElementById("target-svg");
+        svgElement.setAttribute("width", width+"px");
+
+        // 获取svg元素的高度
+        // var height = +svg.attr("height");
+        var height = +window.innerHeight;
+        svgElement.setAttribute("height", height + "px");
 		
 		// 定义fader函数用来获取颜色,返回颜色字符串
 		// d3.interpolateCubehelix(a, b)返回a和b之间的颜色插值，0.2是修正gamma值

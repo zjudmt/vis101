@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<!-- saved from url=(0054)http://www.zjudmt.club/vis101/src/yy/stream/index.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Stream Graph</title>
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<style>
+		button 
+		{
+			position: absolute;
+			left: 10px;
+			top: 10px;
+		}
+	</style>
+</head>
+<body>
+	<svg id="target-svg" width="100" height="720"></svg>
+	<script>
+		// 层的总数
+		var n = 10;
+		// 每层的样本数目
+		var m = 200;
+		// 每层的颠簸总数
+		var k = 20;
+		// d3.stack()用来生成一个新的堆栈生成器
+		// stack.keys(d3.range(n))用来生成一个以0到n-1为主键的堆栈生成器
+		// stack.offset(),默认情况下stacked series的baseline为0，
+		// 然而我们也可以配置stack generator的offset来达到不同的baseline效果。这里设置的offset为
+		// d3.stackOffsetWiggle 是专门用于流图，设置流图堆栈的offset,通过移动基线来减少层的加权摆动
+		var stack1 = d3.stack().keys(d3.range(n)).offset(d3.stackOffsetWiggle);
+		// bumps(m, k)用来返回颠簸k次的长度为m的数组
+	    // d3.range(n).map(function() { return bumps(m, k); })用来生成n*m的矩阵
+	    // d3.transpose()用来对生成的n*m的矩阵进行转置
+	    var datamatrix = d3.transpose(d3.range(n).map(function() { return bumps(m, k); }));
+	    // layers1用来存储堆栈布局后的数据，其中有n个系列，每个系列有m个数据点，每个数据点
+	    // 有一个最低点和顶点值，形如[lower,upper]这样的形式，lower和upper分别用来定义基线和顶线
+		var layers1 = stack1(datamatrix);
+		// 选择baseline为x轴这条直线的布局
+		var stack2 = d3.stack().keys(d3.range(n));
+		// layers2用来存储堆栈布局后的数据
+		var layers2 = stack2(datamatrix);
+		// 将layers1和layers0两个矩阵连接后的结果保存到layers中
+		var layers=layers1.concat(layers2);
+		// 建立svg画布
+		var svg = d3.select("svg");
+		// 获取svg元素的宽度
+		var width = +window.innerWidth;
+		svgElement = document.getElementById("target-svg");
+		svgElement.setAttribute("width", width+"px");
+		
+		// 获取svg元素的高度
+		// var height = +svg.attr("height");
+		var height = +window.innerHeight;
+		svgElement.setAttribute("height", height + "px");
+		// 定义x轴比例尺
+		var x = d3.scaleLinear()
+			      .domain([0, m - 1])
+			      .range([0, width]);
+		// 定义y轴比例尺
+		var y = d3.scaleLinear()
+				   // d3.min(data,dataFn)相当于在计算最值前调用data.map(dataFn)
+			      .domain([d3.min(layers, stackMin), d3.max(layers, stackMax)])
+			      .range([height, 60]);
+
+		// 定义一个感知彩虹颜色函数
+		// d3.interpolateCool(t),t定义域[0,1],返回Niccoli’s perceptual rainbow中的色彩
+		var z = d3.interpolateCool;
+
+		// d3.area()是一个区域生成器,区域通过两条线来界定
+		// d3.area().y0()定义了base line;
+		// d3.area().y1()定义了top line;
+		// d3.area().x()定义了x坐标,其中base line和top line使用的是相同的x坐标
+		var area = d3.area()
+					 .x(function(d,i){return x(i)})
+					 .y0(function(d){return y(d[0])})
+					 .y1(function(d){return y(d[1])});
+
+
+		// 绘制面积区域，通过path元素来绘制
+		var path = svg.selectAll("path")
+					  // 绑定数据
+					  .data(layers1)
+					  .enter().append("path")
+					  // 通过area()函数来为path元素生成绘制所需的数据
+					  .attr("d",area)
+					  // 设置填充色，通过z()颜色函数来获取
+					  .attr("fill",function(){return z(Math.random());});
+
+		// 获取堆栈数据矩阵的最大值
+		function stackMax(layer) 
+		{
+		  return d3.max(layer, function(d) { return d[1]; });
+		}
+		// 获取堆栈数据矩阵的最小值
+		function stackMin(layer) {
+		  return d3.min(layer, function(d) { return d[0]; });
+		}
+
+		// 生成长度为n的数组，其中通过m次颠簸，即调用m次bump(a,n)来变换a数组,最终返回变换后的a数组
+		function bumps(n, m)
+		{
+		  var a = [], i;
+		  // 初值置为零
+		  for (i = 0; i < n; ++i) a[i] = 0;
+		  // m次颠簸
+		  for (i = 0; i < m; ++i) bump(a, n);
+		  return a;
+		}
+		// 通过一定的随机数的运算来变换数组a的值
+		function bump(a, n)
+		{
+		  var x = 1 / (0.1 + Math.random()),
+		      y = 2 * Math.random() - 0.5,
+		      z = 10 / (0.1 + Math.random());
+		  for (var i = 0; i < n; i++)
+		  {
+		    var w = (i / n - y) * z;
+		    a[i] += x * Math.exp(-w * w);
+		  }
+		}
+
+		// 定义左上角 “update”按钮的动作动画
+		function transition()
+		{
+		  var t;
+		  // 获取path元素，并在一定的持续时间内重新绘制
+		  d3.selectAll("path")
+		    // 这里绑定的数据t，是layers1和layers0之间相互切换
+		    .data((t = layers2, layers2 = layers1, layers1 = t))
+		    .transition()
+		    // 动画过渡持续时间
+		    .duration(500)
+		    // 动画最终到达的状态，这里的area是切换后的数据所计算的新的值
+		    .attr("d", area);
+		}
+	</script>
+	<br>
+	<button onclick="transition()">Transform</button>
+
+
+
+
+
+</body></html>
