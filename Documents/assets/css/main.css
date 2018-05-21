@@ -3196,7 +3196,7 @@ body.is-menu-visible #menu .close {
 /* Footer */
 
 #footer {
-    padding: 2em 0 2em 0 ;
+    padding: 1em 0 2em 0 ;
     background-color: #f6f6f6;
     text-align: center;
 }
@@ -3205,7 +3205,7 @@ body.is-menu-visible #menu .close {
 #footer > .inner .copyright {
     width: 100%;
     padding: 0;
-    margin-top: 5em;
+    margin-top: 2em;
     list-style: none;
     font-size: 0.8em;
     color: rgba(88, 88, 88, 0.5);
@@ -3267,7 +3267,7 @@ body.is-menu-visible #menu .close {
 @media screen and (max-width: 736px) {
 
     #footer {
-        padding: 3em 0 1em 0 ;
+        padding: 2em 0 1em 0 ;
     }
 
     #footer > .inner {
@@ -3282,6 +3282,8 @@ body.is-menu-visible #menu .close {
         margin-right: 0;
         margin: 3em 0 0 0;
     }
+
+
 
     #footer > .inner section:nth-child(2) {
         -moz-order: -1;
@@ -3348,6 +3350,11 @@ body.is-menu-visible #menu .close {
 
 }
 
+.column p{
+    margin: -1em 0 2em 0;
+    color: #585858;
+
+}
 
 /* iframe */
 
